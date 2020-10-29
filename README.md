@@ -8,7 +8,7 @@ version: '3.8'
 services: 
   tsstatus:
     build: .
-    command: ["python", "/tsstatus.py"]
+    command: ["python", "./tsstatus.py"]
     environment: 
       - TS_HOST=<ip>
       - TS_USERNAME=serveradmin
