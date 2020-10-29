@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online counter</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin:0;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    h1 {
+      font-family: Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  {% if online_count %}
+    <h1>{{ online_count }} online</h1>
+  {% else %}
+    <h1>I don't know</h1>
+  {% endif %}
+</body>
+</html>
