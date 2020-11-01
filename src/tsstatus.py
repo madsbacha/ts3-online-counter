@@ -35,7 +35,7 @@ def count_clients(clientlist, include_queryuser=False):
 
 def get_usernames_from_clientlist(clientlist):
     reg = re.compile('\sclient_nickname=(.*?)\s')
-    return reg.findall(clientlist):
+    return reg.findall(clientlist)
 
 
 def get_redis():
