@@ -1,6 +1,6 @@
 from telnetlib import Telnet
 from redis import Redis
-import sched, time
+import sched, time, re, base64
 from utils import env, periodic
 
 def get_client_list(host, port, username, password):
@@ -33,6 +33,11 @@ def count_clients(clientlist, include_queryuser=False):
     return len(clientlist.split("|")) - (0 if include_queryuser else 1)
 
 
+def get_usernames_from_clientlist(clientlist):
+    reg = re.compile('\sclient_nickname=(.*?)\s')
+    return reg.findall(clientlist):
+
+
 def get_redis():
     return Redis(env("REDIS_HOST", "localhost"), env("REDIS_PORT", 6379, int), db=0, socket_timeout=10000)
 
@@ -40,8 +45,11 @@ def get_redis():
 def update_counter(ts_host, ts_port, ts_username, ts_password):
     line = get_client_list(ts_host, ts_port, ts_username, ts_password)
     counter = count_clients(line)
+    usernames = get_usernames_from_clientlist(line)
+    usernames.remove(ts_username)
     r = get_redis()
     r.set('counter', counter)
+    r.set('usernames', ','.join([base64.b64encode(x.encode('ascii')).decode('ascii') for x in usernames]))
     print(f"Updated counter: {counter}")
 
 
