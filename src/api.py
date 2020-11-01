@@ -9,7 +9,8 @@ def client_count():
     r = Redis(env("REDIS_HOST", "localhost"), env("REDIS_PORT", 6379, int), db=0)
     counter = r.get('counter')
     counter = counter.decode("ascii") if counter else None
-    usernames = [base64.b64decode(x.encode('ascii')).decode('ascii') for x in r.get('usernames').split(',')]
+    usernames = r.get('usernames')
+    usernames = [base64.b64decode(x.encode('ascii')).decode('ascii') for x in usernames.split(',')] if usernames else []
     return render_template("index.html", online_count=counter, usernames=usernames)
   
 if __name__ == "__main__":
