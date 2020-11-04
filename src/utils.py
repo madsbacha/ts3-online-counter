@@ -1,4 +1,5 @@
 from os import environ
+import base64
 
 def env(name, fallback=None, parser=None):
     """
@@ -26,3 +27,11 @@ def periodic(scheduler, interval, action, actionargs=()):
     scheduler.enter(interval, 1, periodic,
                     (scheduler, interval, action, actionargs))
     action(*actionargs)
+
+
+def tob64(x):
+    return base64.b64encode(x.encode('ascii')).decode('ascii')
+
+
+def fromb64(x):
+    return base64.b64decode(x.encode('ascii')).decode('ascii')

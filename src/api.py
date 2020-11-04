@@ -1,7 +1,6 @@
 from flask import Flask, render_template
 from redis import Redis
-from utils import env
-import base64
+from utils import env, fromb64
 
 app = Flask(__name__)
 @app.route("/")
@@ -10,7 +9,7 @@ def client_count():
     counter = r.get('counter')
     counter = counter.decode("ascii") if counter else None
     usernames = r.get('usernames')
-    usernames = [base64.b64decode(x.encode('ascii')).decode('ascii') for x in usernames.decode("ascii").split(',')] if usernames else []
+    usernames = [fromb64(x) for x in usernames.decode("ascii").split(',')] if usernames else []
     return render_template("index.html", online_count=counter, usernames=usernames)
   
 if __name__ == "__main__":

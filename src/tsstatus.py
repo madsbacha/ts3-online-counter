@@ -1,7 +1,8 @@
 from telnetlib import Telnet
 from redis import Redis
-import sched, time, re, base64
-from utils import env, periodic
+import sched, time, re
+from utils import env, periodic, tob64
+from constants import DATA_UPDATE, REDIS_CHANNEL
 
 def get_client_list(host, port, username, password):
     ts3_welcome_line = "Welcome to the TeamSpeak 3 ServerQuery interface, type \"help\" for a list of commands and \"help <command>\" for information on a specific command."
@@ -49,7 +50,8 @@ def update_counter(ts_host, ts_port, ts_username, ts_password):
     usernames.remove(ts_username)
     r = get_redis()
     r.set('counter', counter)
-    r.set('usernames', ','.join([base64.b64encode(x.encode('ascii')).decode('ascii') for x in usernames]))
+    r.set('usernames', ','.join([tob64(x) for x in usernames]))
+    r.publish(REDIS_CHANNEL, DATA_UPDATE)
     print(f"Updated counter: {counter}")
 
 

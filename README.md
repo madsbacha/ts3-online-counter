@@ -24,6 +24,15 @@ services:
     ports: 
       - 5000:5000
     restart: always
+  discord:
+    build: .
+    command: ["python", "./discordbot.py"]
+    environment: 
+      - REDIS_HOST=redis
+      - DISCORD_CHANNEL_ID=<channel_id>
+      - DISCORD_TOKEN=<discord_bot_token>
+      - PYTHONUNBUFFERED=1
+    restart: always
   redis:
     image: redis
 ```
