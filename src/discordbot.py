@@ -36,9 +36,9 @@ class MyClient(Client):
             print(message)
             try:
                 print(f"is message: {message['type'] == 'message'}, is dataupdate:{message['data'].decode('ascii') == DATA_UPDATE}")
-                if message['type'] == "message" and message['data'].decode('ascii') == DATA_UPDATE:
+                if message['type'] == "message" and message['data'].decode('utf8') == DATA_UPDATE:
                     print(message)
-                    count = r.get('counter').decode("ascii")
+                    count = r.get('counter').decode("utf8")
                     print(f"count: {count}, last_count: {last_count}, update: {count != last_count}")
                     if count != last_count:
                       last_count = count

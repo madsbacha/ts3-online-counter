@@ -50,7 +50,7 @@ def update_counter(ts_host, ts_port, ts_username, ts_password):
     usernames.remove(ts_username)
     r = get_redis()
     r.set('counter', counter)
-    r.set('usernames', ','.join([base64.b64encode(x.encode('utf8')).decode('utf8') for x in usernames]))
+    r.set('usernames', ','.join([tob64(x) for x in usernames]))
     r.publish(REDIS_CHANNEL, DATA_UPDATE)
     print(f"Updated counter: {counter}")
 

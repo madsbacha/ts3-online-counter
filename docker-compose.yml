@@ -1,0 +1,45 @@
+version: '3.8'
+services: 
+  tsstatus:
+    build: .
+    command: ["python", "./tsstatus.py"]
+    environment: 
+      - TS_HOST=51.15.49.94
+      - TS_USERNAME=serveradmin
+      - TS_PASSWORD=NCFIGt7s
+      - REDIS_HOST=redis
+      - PYTHONUNBUFFERED=1
+    restart: always
+    networks:
+      - redis
+  api:
+    build: .
+    command: ["python", "./api.py"]
+    environment: 
+      - REDIS_HOST=redis
+      - PYTHONUNBUFFERED=1
+    restart: always
+    networks:
+      - redis
+    ports: 
+      - 8080:5000
+  discord:
+    build: .
+    command: ["python", "./discordbot.py"]
+    environment: 
+      - REDIS_HOST=redis
+      - DISCORD_GUILD_ID=498789427276021760
+      - DISCORD_CHANNEL_ID=756262161482907728
+      - DISCORD_TOKEN=NDI5NzQ3MTczMjYyMDk4NDMz.Wr_3Pg.wvGZVHcW--ZPxq0giWKyDwIGLO4
+      - PYTHONUNBUFFERED=1
+    restart: always
+    networks:
+      - redis
+  redis:
+    image: redis
+    networks:
+      - redis
+
+networks:
+  redis:
+    

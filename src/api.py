@@ -12,7 +12,7 @@ def client_count():
         counter = r.get('counter')
         counter = counter.decode("utf8") if counter else None
         usernames = r.get('usernames')
-        usernames = [base64.b64decode(x.encode('utf8')).decode('utf8') for x in usernames.decode("utf8").split(',')] if usernames else []
+        usernames = [fromb64(x) for x in usernames.decode("utf8").split(',')] if usernames else []
     except Exception:
         pass
     return render_template("index.html", online_count=counter, usernames=usernames)
@@ -26,7 +26,7 @@ def client_count_api():
         counter = r.get('counter')
         counter = counter.decode("utf8") if counter else None
         usernames = r.get('usernames')
-        usernames = [base64.b64decode(x.encode('utf8')).decode('utf8') for x in usernames.decode("utf8").split(',')] if usernames else []
+        usernames = [fromb64(x) for x in usernames.decode("utf8").split(',')] if usernames else []
     except Exception:
         pass
 

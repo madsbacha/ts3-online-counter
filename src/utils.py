@@ -30,8 +30,8 @@ def periodic(scheduler, interval, action, actionargs=()):
 
 
 def tob64(x):
-    return base64.b64encode(x.encode('ascii')).decode('ascii')
+    return base64.b64encode(x.encode('utf8')).decode('utf8')
 
 
 def fromb64(x):
-    return base64.b64decode(x.encode('ascii')).decode('ascii')
+    return base64.b64decode(x.encode('utf8')).decode('utf8')
