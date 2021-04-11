@@ -15,12 +15,12 @@ def get_client_list(host, port, username, password):
   
     byte_res = b""
     with Telnet(host, port) as tn:
-        tn.read_until(ts3_welcome_line.encode("ascii"))
-        tn.write(login_command.encode("ascii") + b"\n")
-        tn.write(use_command.encode("ascii") + b"\n")
-        tn.write(clientlist_command.encode("ascii") + b"\n")
-        tn.write(exit_command.encode("ascii") + b"\n")
-        byte_res = tn.read_all().decode("ascii")
+        tn.read_until(ts3_welcome_line.encode("utf8"))
+        tn.write(login_command.encode("utf8") + b"\n")
+        tn.write(use_command.encode("utf8") + b"\n")
+        tn.write(clientlist_command.encode("utf8") + b"\n")
+        tn.write(exit_command.encode("utf8") + b"\n")
+        byte_res = tn.read_all().decode("utf8")
     res_lines = byte_res.splitlines()
     clientlist = ""
     for line in res_lines:
@@ -50,7 +50,7 @@ def update_counter(ts_host, ts_port, ts_username, ts_password):
     usernames.remove(ts_username)
     r = get_redis()
     r.set('counter', counter)
-    r.set('usernames', ','.join([tob64(x) for x in usernames]))
+    r.set('usernames', ','.join([base64.b64encode(x.encode('utf8')).decode('utf8') for x in usernames]))
     r.publish(REDIS_CHANNEL, DATA_UPDATE)
     print(f"Updated counter: {counter}")
 
