@@ -8,10 +8,10 @@ def get_client_list(host, port, username, password):
     ts3_welcome_line = "Welcome to the TeamSpeak 3 ServerQuery interface, type \"help\" for a list of commands and \"help <command>\" for information on a specific command."
     ok_line = "error id=0 msg=ok"
     
-    login_command = f"login {username} {password}"
-    use_command = "use 1"
-    clientlist_command = "clientlist"
-    exit_command = "quit"
+    login_command = f"login {username} {password}\n"
+    use_command = "use 1\n"
+    clientlist_command = "clientlist\n"
+    exit_command = "quit\n"
   
     byte_res = b""
     with Telnet(host, port) as tn:
