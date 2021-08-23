@@ -1,5 +1,7 @@
 # ts3-online-counter
 
+**NOTICE:** New version implemented in go: https://github.com/madsbacha/ts3-online
+
 ## docker-compose
 Example docker-compose file
 
